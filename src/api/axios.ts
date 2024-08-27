@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
-import endpoints from "./endpoints";
+
 import { Cookies } from "react-cookie";
+import endpoints from "./endpoints";
 import paths from "shared/paths";
 
 const cookies = new Cookies();

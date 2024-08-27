@@ -1,30 +1,31 @@
-import endpoints from "api/endpoints";
-import axios from "api/axios";
-import LogoLight from "assets/images/Logo.svg";
-import LogoDark from "assets/images/LogoDark.svg";
-import Background from "assets/images/login.jpg";
-import { useMutation } from "react-query";
 import {
   Box,
-  TextField,
-  InputAdornment,
-  IconButton,
   Button,
+  IconButton,
+  InputAdornment,
+  Link,
+  TextField,
   useMediaQuery,
   useTheme,
-  Link,
 } from "@mui/material";
-import { EyeSlash, Eye } from "@phosphor-icons/react";
 import { Controller, useForm } from "react-hook-form";
-import { useAlert } from "context/AlertProvider";
-import { useThemMode } from "context/ThemeProvider";
-import { useUser } from "context/UserProvider";
-import { useIntl } from "react-intl";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Eye, EyeSlash } from "@phosphor-icons/react";
+
+import Background from "assets/images/login.jpg";
 import InputLabel from "ui/InputLabel";
+import LogoDark from "assets/images/LogoDark.svg";
+import LogoLight from "assets/images/Logo.svg";
+import axios from "api/axios";
+import endpoints from "api/endpoints";
 import { login } from "api/login";
 import paths from "shared/paths";
+import { useAlert } from "context/AlertProvider";
+import { useIntl } from "react-intl";
+import { useMutation } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useThemMode } from "context/ThemeProvider";
+import { useUser } from "context/UserProvider";
 
 type SignUpForm = { name: string; email: string; password: string };
 
@@ -53,11 +54,12 @@ const SignUp = () => {
     mutationFn: (data: SignUpForm) =>
       axios.post(endpoints.singup, {
         ...data,
-        farmId: "65ee2a262990a122a2550f1b",
+        farmId: "66cd76b5b637809116750d0c",
       }),
 
     onSuccess: ({ data }: any) => {
       if (data.error) {
+        console.log(data);
         showAlert(data.message, "error");
         return;
       }

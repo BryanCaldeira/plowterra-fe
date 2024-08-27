@@ -15,35 +15,36 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
-import { getCurrencies } from "api/currencies";
-import { createProduct, getProducts } from "api/products";
+import { BodyText, Display } from "ui/Typography";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+import { PayrollTimeframeEnum, StatusEnum } from "project-2-types/dist";
 import {
   closeSeason,
   deleteSeason,
   getSeasonById,
   upsertSeason,
 } from "api/seasons";
+import { createProduct, getProducts } from "api/products";
 import { createUnit, getUnits } from "api/units";
-import { useAlert } from "context/AlertProvider";
-import { useUser } from "context/UserProvider";
-import dayjs from "dayjs";
-import useQueryCache from "hooks/useQueryCache";
-import { PayrollTimeframeEnum, StatusEnum } from "project-2-types/dist";
-import React from "react";
-import { useState } from "react";
-import { Controller, FormProvider, useForm } from "react-hook-form";
-import { useIntl } from "react-intl";
 import { useMutation, useQuery } from "react-query";
-import { BodyText, Display } from "ui/Typography";
-import SeasonDeductions from "./SeasonDeductions";
+
 import ConfirmationDrawer from "ui/ConfirmationDrawer";
-import SeasonImage from "../../assets/images/SeasonSuccess.svg";
-import SelectFreeSolo from "./SelectFreeSolo";
+import { DatePicker } from "@mui/x-date-pickers";
+import Detail from "ui/Detail";
 import DrawerContainer from "ui/DrawerContainer";
 import InputLabel from "ui/InputLabel";
-import Detail from "ui/Detail";
+import React from "react";
+import SeasonDeductions from "./SeasonDeductions";
+import SeasonImage from "../../assets/images/SeasonSuccess.svg";
+import SelectFreeSolo from "./SelectFreeSolo";
 import Tag from "ui/Tag";
+import dayjs from "dayjs";
+import { getCurrencies } from "api/currencies";
+import { useAlert } from "context/AlertProvider";
+import { useIntl } from "react-intl";
+import useQueryCache from "hooks/useQueryCache";
+import { useState } from "react";
+import { useUser } from "context/UserProvider";
 
 const payrollTimeframeList = (
   Object.keys(PayrollTimeframeEnum) as Array<keyof typeof PayrollTimeframeEnum>
@@ -211,6 +212,7 @@ const SeasonDrawer = ({ dismiss, seasonId, ...props }: SeasonDrawerProps) => {
     queryKey: GET_CURRENCY_KEY,
     queryFn: getCurrencies,
     onSuccess: (result) => {
+      console.log(result, "Currencies")
       setCurrencies(result);
     },
     onError: (error) => {

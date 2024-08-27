@@ -4,28 +4,31 @@ import {
   IconButton,
   InputAdornment,
   InputLabel,
+  Link,
   TextField,
+  Typography,
   useMediaQuery,
   useTheme,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
+import { Eye, EyeSlash } from "@phosphor-icons/react";
 
+import Background from "assets/images/login.jpg";
 import { ISignInRequest } from "project-2-types/dist/interface";
 import LoginSchema from "project-2-types/dist/ajv/signin.ajv";
+import LogoDark from "assets/images/LogoDark.svg";
+import LogoLight from "assets/images/Logo.svg";
 import endpoints from "api/endpoints.ts";
 import { login } from "../../api/login.ts";
+import paths from "shared/paths.ts";
 import { useAlert } from "context/AlertProvider.tsx";
 import { useIntl } from "react-intl";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useThemMode } from "context/ThemeProvider.tsx";
 import { useUser } from "context/UserProvider.tsx";
 import { validateResolver } from "shared/ajv.ts";
-import LogoLight from "assets/images/Logo.svg";
-import LogoDark from "assets/images/LogoDark.svg";
-import Background from "assets/images/login.jpg";
-import { useState } from "react";
-import { Eye, EyeSlash } from "@phosphor-icons/react";
-import { useThemMode } from "context/ThemeProvider.tsx";
 
 interface LoginForm extends ISignInRequest {}
 
@@ -54,6 +57,7 @@ const Login: React.FC = () => {
     mutationKey: [endpoints.signin],
     mutationFn: login,
     onSuccess: (data) => {
+      console.log(data, "Logged In")
       data?.user && setUser(data.user);
       showAlert(
         intl.formatMessage({
@@ -212,6 +216,15 @@ const Login: React.FC = () => {
                 { isLoading: Number(!!isLoading) }
               )}
             </Button>
+            <Typography textAlign="center">
+              New user?&nbsp;
+              <Link
+                  sx={{ cursor: "pointer" }}
+                  onClick={() => navigate(paths.signup)}
+                >
+                  Sign up
+              </Link>
+            </Typography>
           </Box>
         </Box>
       </Box>
